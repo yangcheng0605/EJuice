@@ -1,0 +1,8 @@
+**/*.md
+**/*.svg
+**/*.ejs
+**/*.html
+.husky
+node_modules
+package.json
+package-lock.json
