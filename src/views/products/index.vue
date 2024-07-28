@@ -7,9 +7,19 @@
       </div>
     </div> 
     <div class="a_content a_content2 products_content">
-      <div class="a_content_top">
+      <div class="a_content_top Desk_content_top" v-if="!isMobile">
         <p class="title AntonFont">
-          New Arrivals
+          ODB & NEX JUICE
+        </p>
+        <div class="products_tab">
+          <a-tabs v-model:activeKey="activeKey" @change="changeTab">
+            <a-tab-pane :tab="item.cateName" v-for="item in mpType" :key='item.cateId'></a-tab-pane>
+          </a-tabs>
+        </div>
+      </div>
+      <div class="a_content_top" v-else>
+        <p class="title AntonFont">
+          ODB & NEX JUICE
         </p>
         <div class="products_tab">
           <a-tabs v-model:activeKey="activeKey" @change="changeTab">
@@ -27,9 +37,8 @@
                 </div>
                 <div class="p_text">
                   <p class="p_name">{{item.proName}}</p>
-                  <!-- <p class="p_hint">{{item.proDesc}}</p> -->
                   <p class="p_learn smallArrow_box">
-                    <span>Learn more</span><img class="smallArrow" src="@/assets/img/arrow_white_r_small.png" alt="">
+                    <span>Learn more</span><img class="smallArrow" src="@/assets/img/arrow_r_small.png" alt="">
                   </p>
                 </div>
               </div>
@@ -56,8 +65,9 @@ import Storage from '@/utils/storage';
       const route = useRoute()
       const state = reactive({
         spinning: false,
+        isMobile: false,
         colSpan: 5,
-        gutter: [30, 30],
+        gutter: null,
         activeKey: 2,
         mpType:[
           { cateId: 2, cateName: 'New Arrivals'},
@@ -95,9 +105,11 @@ import Storage from '@/utils/storage';
        if (windowWidth < 750) {
           state.colSpan = 12;
           state.gutter = [15, 20]
+          state.isMobile = true
         } else {
           state.colSpan = 5;
-          state.gutter = [30, 30]
+          state.gutter = [30, 40],
+          state.isMobile = false
         }
       };
       const linkTo = (res) => {
@@ -139,7 +151,7 @@ import Storage from '@/utils/storage';
     background: transparent;
   }
   .ant-spin-dot .ant-spin-dot-item{
-    background-color: #FAC233 !important;
+    background-color: #DB3A7B !important;
   }
 }
 </style>

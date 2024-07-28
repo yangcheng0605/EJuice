@@ -176,7 +176,7 @@ import { useRouter } from 'vue-router';
       background: transparent;
       &:hover{
         background: #111;
-        color: #F5B81A;
+        color: #DB3A7B;
       }
     }
   }

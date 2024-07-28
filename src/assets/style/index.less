@@ -190,10 +190,96 @@ input,textarea,select {
 div,input,textarea {
   box-sizing: border-box
 }
-
-.wrapper {
+/* 首页视频 */
+.video-container{
+  width: 100%;
+  height: 100vh;
   overflow: hidden;
-  margin-top: 6.5rem
+  video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .guide {
+    position: absolute;
+    left: 50%;
+    bottom: 2vw;
+    width: 1.61vw;
+    transform: translate3d(-50%, 0px, 0px);
+    animation: upDown 1s infinite;
+  }
+  .video-mask{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+// 选择产品交互
+.flavors-content{
+  display: flex;
+  justify-content: space-between;
+.col-left{
+  width: 5.4em;
+  margin-top: 0.24em;
+  .container{
+    height: 200px;
+    font-size: 50px;
+    margin-top: 0.48em;
+    position: relative;
+    position: sticky;
+    top: 88px;
+  }
+}
+.col-right{
+  width: 50%;
+  .changebtns {
+    .item-group {
+      float: left;
+      width: 20%;
+      cursor: pointer;
+      img {
+        display: block;
+        width: 100%;
+        position: relative;
+        z-index: 2;
+      }
+      .item-list {
+        position: relative;
+        .flavor-hover {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 1;
+            transition: all .4s ease;
+        }
+        &:hover,
+        &.focus{
+           .flavor-hover{
+             opacity: 0;
+             transition: all .4s ease;
+           }
+        }
+      }
+    }
+  }
+  .item-group:first-child, .item-group:nth-child(3), .item-group:nth-child(5){
+    margin-top: 5em;
+  }
+}
+}
+@keyframes upDown{
+  0% {
+    margin-bottom: 0;
+  }
+  
+  100% {
+    margin-bottom: 10px;
+  }
+}
+.wrapper {
+  // overflow: hidden;
 }
 
 .swiper-button-prev:after,.swiper-button-next:after {
@@ -650,7 +736,7 @@ div,input,textarea {
     left: 50%;
     transform: translate(-50%,-50%);
     p{
-      color: #F5B81A;
+      color: #fff;
       text-align: center;
     }
     .text_1{
@@ -680,7 +766,7 @@ div,input,textarea {
 }
 .a_content,.a_content2{
   padding: 7.5rem 15rem;
-  background: #FEF8E8;
+  background: #fff;
   // min-height: 550px;
   .a_content_top{
     margin-bottom: 3.75rem;
@@ -691,10 +777,30 @@ div,input,textarea {
       font-size: 2.5rem;
       line-height: 2.5rem;
     }
+    .products_tab{
+      .ant-tabs-nav-operations{
+        display: none;
+      }
+    }
     .sub_title{
       font-weight: 500;
-      padding-bottom: .5625rem;
-      border-bottom: 2px solid #F5B81A;
+      position: relative;
+      &::after{
+        content: '';
+        display: inline-block;
+        width: 100%;
+        height: 0.125rem;
+        position: absolute;
+        left: 0;
+        bottom: -0.5625rem;
+        background: linear-gradient( 135deg, #E68812 0%, #DB3A7B 100%);
+      }
+    }
+  }
+  .Desk_content_top{
+    flex-flow: column;
+    .title{
+      margin-bottom: 1.875rem;
     }
   }
   .a_content_bottom{
@@ -718,7 +824,7 @@ div,input,textarea {
     }
     .a_email{
       margin-top: 1.25rem;
-      color: #FAC233;
+      color: #E68812;
       font-size: .875rem;
     }
   }
@@ -745,6 +851,7 @@ div,input,textarea {
 
 // 邮箱弹窗
 .contact_pop,.adult_pop{
+  width: 30rem !important;
   color: #000;
   padding: 1.875rem;
   box-sizing: content-box !important;
@@ -762,14 +869,17 @@ div,input,textarea {
     margin: .875rem 0 2.25rem;
   }
   .copyBtn{
-    background: #111;
-    color: #F5B81A;
+    background: linear-gradient( 135deg, #E68812 0%, #DB3A7B 100%);
+    border-radius: 1.375rem;
+    border: 2px solid rgba(255,255,255,0.5);
     width: 100%;
-    height: 44px;
+    height: 2.75rem;
+    font-size: 1rem;
+    color: #FFF;
   }
   .copyBtn:hover{
-    color: #F5B81A;
-    border-color: #F5B81A;
+    color: #fff !important;
+    border: 2px solid rgba(255,255,255,0.5);
   }
   img{
     width: 48px;
@@ -780,7 +890,8 @@ div,input,textarea {
   font-size: 1.25rem;
   color: #333;
   .title{
-    font-size: 3rem;
+    font-size: 2.5rem;
+    line-height: 3rem;
   }
   .hint{
     margin: .75rem 0 2.25rem;
@@ -789,14 +900,14 @@ div,input,textarea {
     display: flex;
     align-items: center;
     button{
-      height: 44px;
+      height: 2.75rem;
       width: 50% !important;
       font-size: 1rem;
     }
     .cancelBtn{
       background: #fff;
     }
-    .cancelBtn:hover{
+    .cancelBtn:hover{home_c_contain
       color: #333;
       border-color: #333;
     }
@@ -807,42 +918,52 @@ div,input,textarea {
   }
 }
 // 产品列表
-.products{
-  
+.products_content{
+  padding: 5rem 8.4375rem 6.5rem;
+  title{
+    margin: 0 auto
+  }
 }
 .products_content,.products_list{
-  background: linear-gradient( 180deg, #111 0%, #333 100%);
-  color: #fff;
+  // background: linear-gradient( 180deg, #111 0%, #333 100%);
+  color: #111;
   .products_tab{
     .ant-tabs-nav{
       margin-bottom: 0;
+      &::before{
+        border: none;
+      }
       .ant-tabs-nav-wrap{
         overflow-x: scroll !important;
         scrollbar-color: transparent transparent;
       }
     }
     .ant-tabs-tab{
-      color: rgba(255,255,255,0.5);
-      padding: 9px 0;
+      color: rgba(17,17,17,0.5);
+      padding: 0.5625rem 0;
       font-size: 1rem;
       font-weight: 500;
       .ant-tabs-tab-btn:hover,
       .ant-tabs-tab-btn:focus{
-        color: #fff;
+        color: #111;
       }
     }
     .ant-tabs-tab-active .ant-tabs-tab-btn{
-      color: #fff !important;
+      color: #111 !important;
     }
     .ant-tabs-ink-bar{
-      background: #FAC233;
+      height: 0.125rem;
+      background: linear-gradient( 135deg, #E68812 0%, #DB3A7B 100%);
     }
   }
   .proImg{
-    height: 16.5rem;
+    height: 19.125rem;
     background: url('../../assets/img/product/bg_s.png') no-repeat 100%/cover;
-    margin-bottom: .9rem;
+    margin-bottom: 1rem;
     border-radius: 8px;
+    img{
+      height: 100%;
+    }
   }
   .p_text{
     font-size: .875rem;
@@ -850,7 +971,7 @@ div,input,textarea {
       font-weight: 500;
       font-size: 1.5rem;
       line-height: 1.5rem;
-      margin-bottom: .9rem;
+      margin-bottom: 1rem;
     }
     .p_hint{
       margin: .5rem 0 .75rem ;
@@ -871,10 +992,11 @@ div,input,textarea {
 .smallArrow_box{
  display: flex;
  align-items: center;
+ line-height: 14px;
  .smallArrow{
-  width: 4px;
-  height: 6px;
-  margin: 4px 0 0 6px;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin: 0.125rem 0 0 0.125rem
  }
 }
 .products_list{
@@ -895,7 +1017,7 @@ div,input,textarea {
   }
 
   .wrapper {
-      margin-top: 6.5rem
+      // margin-top: 6.5rem
   }
 
   ::-webkit-scrollbar {

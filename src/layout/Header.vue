@@ -1,14 +1,6 @@
 <template>
-  <div class="shopify-section-header">
+  <div class="shopify-section-header" id="index">
     <div class="header">
-      <div class="warning">
-        <div class="warning_move warning_move1">
-          <div><span>WARNING: </span>This product contains nicotine. Nicotine is an addictive chemical.　Only for adults, MINORS are prohibited from buying e-cigarette</div>
-        </div>
-        <div class="warning_move warning_move2">
-          <div><span>WARNING: </span>This product contains nicotine. Nicotine is an addictive chemical.　Only for adults, MINORS are prohibited from buying e-cigarette</div>
-        </div>
-      </div>
       <div class="desktop-only">
         <div class="main">
           <div class="main_left">
@@ -127,11 +119,11 @@
                     ABOUT US
                   </a>
                 </p>
-                <p class="Mnav" >
+                <!-- <p class="Mnav" >
                   <a href="/#/wholesale" @click="show=false">
                     BLOG
                   </a>
-                </p>
+                </p> -->
               </a-collapse>
             </div>
           </div>
@@ -166,7 +158,7 @@ export default {
         {name: 'PRODUCTS', path: '/products', active: false},
         {name: 'CONTACT US', path: '/contact', active: false},
         {name: 'ABOUT US', path: '/about', active: false},
-        {name: 'BLOG', path: '/wholesale', active: false},
+        // {name: 'BLOG', path: '/wholesale', active: false},
       ],
       proIndex: 2,
       mpType:[

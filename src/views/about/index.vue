@@ -3,12 +3,12 @@
     <div class="top_banner">
       <img src="@/assets/img/about/about_banner.webp" alt="">
       <div class="t_box">
-        <p class="title AntonFont about_title">WHY EHONOS</p>
+        <p class="title AntonFont about_title">WHY NEX JUICE</p>
       </div>
     </div> 
-    <div :class="['a_content', index % 2 ===0 ? 'bg_dark':'bg_light']" v-for="(item, index) in isMobile?companyInfo_mb:companyInfo" :key="item.id" @click="console.log('')">
+    <div :class="['a_content']" v-for="item in isMobile?companyInfo_mb:companyInfo" :key="item.id" @click="console.log('')">
       <img :src="item.img" alt="">
-      </div>
+    </div>
     <!-- <div class="a_content">
       <div class="a_top_box">
         <div class="a_c_left wow animate__fadeInLeft" data-wow-offset="50">
@@ -24,11 +24,11 @@
           </div>
           <div class="a_text_bottom">
             <p>
-              Shenzhen XingfanTechnology., Ltd.(EHONOS VAPE) is an innovative company dedicated to providing high-quality electronic cigarette products and comprehensive customer service.Since its establishment, Ehonos has been committed to integrating design, research and development, manufacturing, sales, marketing, and brand management.
+              Shenzhen XingfanTechnology., Ltd.(NEX VAPE) is an innovative company dedicated to providing high-quality electronic cigarette products and comprehensive customer service.Since its establishment, NEX has been committed to integrating design, research and development, manufacturing, sales, marketing, and brand management.
             </p>
             <br>
             <p>
-              With a focus on user experience, Ehonos adheres to a development strategy centered around users and guided by the market. We attach great importance to our professional research and development team and innovative talents, continuously improving our products and services, and enjoying a good reputation worldwide.
+              With a focus on user experience, NEX adheres to a development strategy centered around users and guided by the market. We attach great importance to our professional research and development team and innovative talents, continuously improving our products and services, and enjoying a good reputation worldwide.
             </p>
           </div>
         </div>
@@ -63,15 +63,15 @@ import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue';
         isMobile: false,
         companyInfo:[
           { id: 1, img: require('@/assets/img/about/companyInfo_1.webp')},
-          { id: 2, img: require('@/assets/img/about/companyInfo_2.webp')},
-          { id: 3, img: require('@/assets/img/about/companyInfo_3.webp')},
-          { id: 4, img: require('@/assets/img/about/companyInfo_4.webp')},
+          // { id: 2, img: require('@/assets/img/about/companyInfo_2.webp')},
+          // { id: 3, img: require('@/assets/img/about/companyInfo_3.webp')},
+          // { id: 4, img: require('@/assets/img/about/companyInfo_4.webp')},
         ],
         companyInfo_mb:[
           { id: 1, img: require('@/assets/img/home/companyInfo_mb_1.webp')},
-          { id: 2, img: require('@/assets/img/home/companyInfo_mb_2.webp')},
-          { id: 3, img: require('@/assets/img/home/companyInfo_mb_3.webp')},
-          { id: 4, img: require('@/assets/img/home/companyInfo_mb_4.webp')},
+          // { id: 2, img: require('@/assets/img/home/companyInfo_mb_2.webp')},
+          // { id: 3, img: require('@/assets/img/home/companyInfo_mb_3.webp')},
+          // { id: 4, img: require('@/assets/img/home/companyInfo_mb_4.webp')},
         ],
       })
 

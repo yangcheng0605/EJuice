@@ -5,7 +5,7 @@
   font-size: .875rem;
   height: 2.5rem;
   line-height: 2.5rem;
-  color: #F5B81A
+  color: #fff
 }
 
 .warning span {
@@ -99,7 +99,7 @@
     cursor: pointer
   }
   .mp_nav_hover {
-    color: #F5B81A;
+    color: #DB3A7B;
   }
 }
 
@@ -128,7 +128,7 @@
   box-sizing: content-box;
   &:hover{
     span{
-      color: #F5B81A;
+      color: #DB3A7B;
     }
   }
   span{
@@ -145,7 +145,7 @@
 }
 
 .mp_more:hover {
-  color: #F5B81A
+  color: #DB3A7B
 }
 
 .mp_img {
@@ -180,7 +180,7 @@
 }
 
 .maex_nav:hover {
-  color: #F5B81A
+  color: #DB3A7B
 }
 
 .main_mask {
@@ -201,7 +201,7 @@
 }
 
 .main_left img {
-  width: 12.375rem
+  width: 7.125rem
 }
 
 .main_center {
@@ -245,7 +245,7 @@
     font-weight: 500;
   }
   .nav_active{
-    color: #F5B81A;
+    color: #DB3A7B;
   }
 }
 
@@ -289,14 +289,24 @@
   margin-left: 0
 }
 .nav span:hover {
-  color: #F5B81A
+  color: #DB3A7B
 }
 
-.header {
+.header_top{
+  z-index: 444;
+  width: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 444;
+}
+.shopify-section-header{
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 445;
+  margin-top: 2.5rem;
+}
+.header {
   width: 100%
 }
 @media (max-width: 950px) {
@@ -337,7 +347,7 @@
   }
 
   .main_center img {
-      width: 12.375rem;
+      width: 7.125rem;
       animation: none;
       margin: 0;
   }
@@ -375,8 +385,9 @@
   .Mnav {
       padding: 1.25rem 0 1.125rem;
       border-bottom: 1px solid black !important;  
-      font-size: 1.2rem;
-      color: #000;
+      font-size: 1.125rem;
+      line-height: 1.125rem;
+      color: #333;
       border-radius: 0 !important;
       a{
         font-weight: 500;
@@ -416,9 +427,10 @@
     }
   }
   .Mnav_link a {
-    font-size: .9375rem;
+    font-size: 1rem;
+    line-height: 1rem;
     font-weight: 500;
-    color: #666;
+    color: #555;
     display: block;
     margin-top: 1.25rem;
   }
@@ -465,10 +477,12 @@
       transform: rotate(45deg)
   }
 
-
+  .shopify-section-header{
+    top: 2.5rem;
+  }
   .header {
-      position: fixed;
-      top: 0;
+      // position: fixed;
+      top: 2.5rem;
       z-index: 44
   }
 
@@ -502,7 +516,7 @@
   }
 
   .Mcontact div a {
-      color: #F5B81A;
+      color: #DB3A7B;
       display: inline;
       font-size: .75rem;
       line-height: 1

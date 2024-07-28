@@ -3,10 +3,42 @@
     <div class="proImg pro_banner" >
       <img :src="isMobile && proData?proData.proSPath:proData.proPath" alt="">
     </div>
+    <div>
+      <div class="pd-compare-container">
+          <div class="left-col" id="setion-3-img-1" style="transform: matrix(1, 0, 0, 1, 138.004, 0);">
+              <img src="https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/5-1.png" alt="">
+          </div>
+          <div class="mid-col">
+              <img src="https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/5-2.png" alt="">
+          </div>
+          <div class="right-col" id="setion-3-img-2" style="transform: matrix(1, 0, 0, 1, -138.004, 0);">
+              <img src="https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/5-3.png" alt="">
+          </div>
+      </div>
+    </div>
+    <div class="product_content">
+      <div class="flavors-content">
+        <div class="col-left">
+          <div class="container">
+            {{currentPro && currentPro.id}}
+          </div>
+        </div>
+        <div class="col-right">
+          <div class="changebtns clearfix">
+            <div class="item-group" v-for="item in productImgs" :key="item.id">
+              <div :class="['item-list', (currentPro&&currentPro.id)===item2.id?'focus':'']" :data-index="item2.id" v-for="item2 in item.data" :key="item2.id" @click="choosePro(item2)">
+                  <img :src="item2.url" alt="" class="flavor-pd">
+                  <img src="https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/shadow.png" alt="" srcset="" class="flavor-hover">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="proImg" v-for="(item, index) in imageUrls" :key='index'>
       <img :src="item" alt="">
     </div>
-    <div class="other_pro" v-if="proList && proList.length>0">
+    <!-- <div class="other_pro" v-if="proList && proList.length>0">
       <p class="title AntonFont wow animate__fadeInUp" data-wow-offset="50">Other Product Recommendations</p>
       <div class="swiper_box wow animate__fadeInUp" data-wow-offset="50">
         <swiper
@@ -23,7 +55,6 @@
               </div>
               <div class="p_text">
                 <p class="p_name">{{item.proName}}</p>
-                <!-- <p class="p_hint">{{item.proDesc}}</p> -->
                 <p class="p_learn smallArrow_box">
                   <span>Learn more</span><img class="smallArrow" src="@/assets/img/arrow_white_r_small.png" alt="">
                 </p>
@@ -36,7 +67,7 @@
         <div class="custom_sildeNext" @click="sildeNext">
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -44,6 +75,8 @@ import { getCurrentInstance, onMounted, nextTick, reactive, toRefs, watch } from
 import { useRoute, useRouter } from 'vue-router';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import { Navigation } from 'swiper/modules';
+import { gsap } from "gsap"
+import { ScrollTrigger } from "gsap/ScrollTrigger"
 import 'swiper/css/navigation';
 import 'swiper/css';
 
@@ -63,9 +96,62 @@ import 'swiper/css';
         modules: [Navigation],
         swiper: null,
         imageUrls: null,
-        isMobile: false,
         proList: [],
-        proData: {proSPath:null, proPath:null}
+        proData: {proSPath:null, proPath:null},
+        isMobile: false,
+        currentPro: null,
+        productImgs:[
+          {
+            id:0, data: [
+              {id: 0, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-1.png'},
+              {id: 1, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-5.png'},
+              {id: 2, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-9.png'},
+              {id: 3, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-13.png'},
+              {id: 4, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-21.png'},
+              {id: 5, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-26.png'},
+            ]
+          },
+          {
+            id:1, data: [
+              {id: 6, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-2.png'},
+              {id: 7, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-6.png'},
+              {id: 8, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-10.png'},
+              {id: 9, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-14.png'},
+              {id: 10, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-22.png'},
+              {id: 11, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-27.png'},
+            ]
+          },
+          {
+            id:2, data: [
+              {id: 12, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-3.png'},
+              {id: 13, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-7.png'},
+              {id: 14, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-11.png'},
+              {id: 15, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-15.png'},
+              {id: 16, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-23.png'},
+              {id: 17, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-28.png'},
+            ]
+          },
+          {
+            id:3, data: [
+              {id: 18, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-4.png'},
+              {id: 19, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-8.png'},
+              {id: 20, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-12.png'},
+              {id: 21, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-16.png'},
+              {id: 22, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-24.png'},
+              {id: 23, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-29.png'},
+            ]
+          },
+          {
+            id:4, data: [
+              {id: 24, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-17.png'},
+              {id: 25, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-18.png'},
+              {id: 26, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-19.png'},
+              {id: 27, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-20.png'},
+              {id: 28, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-25.png'},
+              {id: 29, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-30.png'}
+            ]
+          }
+        ],
       })
 
       onMounted(async () => { 
@@ -84,6 +170,7 @@ import 'swiper/css';
             }
           )
           wow.init()
+          state.currentPro = state.productImgs[0].data[0]
         })
       })
       const getProductList = (id) => {
@@ -110,6 +197,9 @@ import 'swiper/css';
           state.isMobile = false
         }
       };
+      const choosePro = (res) => {
+        state.currentPro = res
+      };
       const onSwiper = (swiper) => {
         state.swiper = swiper
       };
@@ -135,6 +225,7 @@ import 'swiper/css';
         ...toRefs(state),
         onSwiper,
         linkTo,
+        choosePro,
         sildePre,
         sildeNext,
       };
@@ -151,6 +242,9 @@ import 'swiper/css';
   }
   .proImg{
     margin-bottom: .9rem;
+  }
+  .product_content{
+    padding: 5rem 7.5rem;
   }
   .other_pro{
     padding: 6.25rem 15rem;
@@ -192,6 +286,40 @@ import 'swiper/css';
     .custom_sildeNext:hover{
       background: url('../../assets/img/arrow_yellow_r.png') no-repeat 100%/contain;
     }
+  }
+}
+.pd-compare-container{
+  display: flex;
+  box-pack: center;
+  justify-content: center;
+  align-items: flex-end;
+  img {
+    display: block;
+    margin: 0 auto;
+    width: 1.38em;
+    height: 4.97em;
+    margin-bottom: 0.48em;
+  }
+  .left-col {
+    transform: matrix(1, 0, 0, 1, 342.6, 0);
+  }
+  .right-col {
+    img {
+      width: 2.08em;
+      height: 5.89em;
+    }
+  }
+  .mid-col {
+    margin: 0;
+    opacity: 0;
+  }
+  #setion-3-img-1, #setion-3-img-2{
+    transition: transform;
+    will-change: transform, opacity;
+    height: 7.4em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
 }
 </style>

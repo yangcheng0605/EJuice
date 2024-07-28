@@ -48,7 +48,7 @@
         </a-col>
       </a-row>
     </div>
-    <a-modal class="contact_pop" v-model:open="contactModal" :width="480" title="" :closable="false" :footer="null" centered>
+    <a-modal class="contact_pop" v-model:open="contactModal" title="" :closable="false" :footer="null" centered>
       <div class="pop_top">
         <span class="title AntonFont">{{contactModalOp.title}}</span>
         <img :src="contactModalOp.url" alt="">
@@ -68,7 +68,7 @@ import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue';
       const { proxy } = getCurrentInstance();
       const state = reactive({
         contactModal: false,
-        email: 'support@ehonos.com',
+        email: 'support@NEX.com',
         whatsApp: '+86 13760182010',
         contactModalOp: {
           title: '',
