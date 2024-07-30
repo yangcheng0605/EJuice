@@ -34,14 +34,77 @@
           <div class="flavors-content">
             <div class="col-left">
               <div class="container">
-                {{currentPro && currentPro.id}}
+                <div class="currentNum">
+                  <span>{{currentPro && currentPro.index}}/{{ productImgs.length || 0 }}</span>
+                </div>
+                <img class="proImg" :src="proInfo.img" alt="">
+                <div class="pro_info">
+                  <div class="info_top">
+                    <h3>{{ proInfo.title }}</h3>
+                    <div class="proBuy">
+                      <div class="rateList">
+                        <div class="rate_box">
+                          <div class="gutter-row">
+                            <span>FRAGRANCE</span><a-rate v-model:value="proInfo.fragrance" >
+                              <template #character="{ index }">
+                                <span class="rateCircle"
+                                  :style="{ 
+                                    background: index+1 <= proInfo.fragrance ? '#999' : 'transparent' 
+                                  }"
+                                ></span>
+                              </template>
+                            </a-rate>
+                          </div>
+                          <div class="gutter-row">
+                            <span>SWEETNESS</span><a-rate v-model:value="proInfo.sweetness" >
+                              <template #character="{ index }">
+                                <span class="rateCircle"
+                                  :style="{ 
+                                    background: index+1 <= proInfo.sweetness ? '#999' : 'transparent' 
+                                  }"
+                                ></span>
+                              </template>
+                            </a-rate>
+                          </div>
+                          <div class="gutter-row">
+                            <span>COOLNESS</span><a-rate v-model:value="proInfo.coolness" >
+                              <template #character="{ index }">
+                                <span class="rateCircle"
+                                  :style="{ 
+                                    background: index+1 <= proInfo.coolness ? '#999' : 'transparent' 
+                                  }"
+                                ></span>
+                              </template>
+                            </a-rate>
+                          </div>
+                          <div class="gutter-row">
+                            <span>THROAT HIT</span><a-rate v-model:value="proInfo.throatHit" >
+                              <template #character="{ index }">
+                                <span class="rateCircle"
+                                  :style="{ 
+                                    background: index+1 <= proInfo.throatHit ? '#999' : 'transparent' 
+                                  }"
+                                ></span>
+                              </template>
+                            </a-rate>
+                          </div>
+                        </div>
+                      </div>
+                      <a-button class="buyNow" shape="round"  @click="buyNow(proInfo)">Buy Now</a-button>
+                    </div>
+                  </div>
+                  <div class="info_bottom">
+                    {{ proInfo.info }}
+                  </div>
+                </div>
               </div>
             </div>
             <div class="col-right">
               <div class="changebtns clearfix">
-                <div class="item-group" v-for="item in productImgs" :key="item.id">
-                  <div :class="['item-list', (currentPro&&currentPro.id)===item2.id?'focus':'']" :data-index="item2.id" v-for="item2 in item.data" :key="item2.id" @click="choosePro(item2)">
-                      <img :src="item2.url" alt="" class="flavor-pd">
+                <!-- <div class="item-group" v-for="item in productImgs" :key="item.id"> -->
+                <div class="item-group">
+                  <div :class="['item-list', (currentPro&&currentPro.id)===item.id?'focus':'']" :data-index="index" v-for="(item, index) in productImgs" :key="item.id" @click="choosePro(item, index)">
+                      <img :src="item.url" alt="" class="flavor-pd">
                       <img src="https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/shadow.png" alt="" srcset="" class="flavor-hover">
                   </div>
                 </div>
@@ -108,57 +171,47 @@ export default {
         { id: 4, img: require('@/assets/img/home/companyInfo_mb_4.webp'), height:'46.75'},
       ],
       productImgs:[
-        {
-          id:0, data: [
-            {id: 0, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-1.png'},
-            {id: 1, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-5.png'},
-            {id: 2, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-9.png'},
-            {id: 3, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-13.png'},
-            {id: 4, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-21.png'},
-            {id: 5, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-26.png'},
-          ]
-        },
-        {
-          id:1, data: [
-            {id: 6, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-2.png'},
-            {id: 7, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-6.png'},
-            {id: 8, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-10.png'},
-            {id: 9, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-14.png'},
-            {id: 10, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-22.png'},
-            {id: 11, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-27.png'},
-          ]
-        },
-        {
-          id:2, data: [
-            {id: 12, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-3.png'},
-            {id: 13, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-7.png'},
-            {id: 14, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-11.png'},
-            {id: 15, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-15.png'},
-            {id: 16, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-23.png'},
-            {id: 17, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-28.png'},
-          ]
-        },
-        {
-          id:3, data: [
-            {id: 18, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-4.png'},
-            {id: 19, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-8.png'},
-            {id: 20, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-12.png'},
-            {id: 21, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-16.png'},
-            {id: 22, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-24.png'},
-            {id: 23, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-29.png'},
-          ]
-        },
-        {
-          id:4, data: [
-            {id: 24, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-17.png'},
-            {id: 25, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-18.png'},
-            {id: 26, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-19.png'},
-            {id: 27, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-20.png'},
-            {id: 28, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-25.png'},
-            {id: 29, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-30.png'}
-          ]
-        }
+        {id: 0, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-1.png'},
+        {id: 1, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-5.png'},
+        {id: 2, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-9.png'},
+        {id: 3, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-13.png'},
+        {id: 4, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-21.png'},
+        {id: 5, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-26.png'},
+        {id: 6, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-2.png'},
+        {id: 7, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-6.png'},
+        {id: 8, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-10.png'},
+        {id: 9, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-14.png'},
+        {id: 10, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-22.png'},
+        {id: 11, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-27.png'},
+        {id: 12, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-3.png'},
+        {id: 13, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-7.png'},
+        {id: 14, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-11.png'},
+        {id: 15, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-15.png'},
+        {id: 16, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-23.png'},
+        {id: 17, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-28.png'},
+        {id: 18, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-4.png'},
+        {id: 19, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-8.png'},
+        {id: 20, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-12.png'},
+        {id: 21, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-16.png'},
+        {id: 22, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-24.png'},
+        {id: 23, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-29.png'},
+        {id: 24, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-17.png'},
+        {id: 25, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-18.png'},
+        {id: 26, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-19.png'},
+        {id: 27, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-20.png'},
+        {id: 28, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-25.png'},
+        {id: 29, url: 'https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/pd-30.png'}
       ],
+      proInfo: {
+        id: 1,
+        title: 'Products Name - 1',
+        fragrance: 5,
+        sweetness: 3,
+        coolness: 3,
+        throatHit: 2,
+        img: require('@/assets/img/pro_1.png'),
+        info: 'Shenzhen XingfanTechnology., Ltd.(EHONOS VAPE) is an innovative company dedicated to providing high-quality electronic cigarette products and comprehensive customer service.Since its establishment, Ehonos has been committed to integrating design, research and development, manufacturing, sales, marketing, and brand management. adevelopment, manufacturing, sales, marketing, and brand management.'
+      },
       proList: null,
       indicator: indicator,
     })
@@ -181,7 +234,8 @@ export default {
       })
       handleResize();
       window.addEventListener('resize', handleResize);
-      state.currentPro = state.productImgs[0].data[0]
+      state.currentPro = state.productImgs[0]
+      state.currentPro['index'] = 1
     })
     const getPicList = () => {
       proxy.$api.picList('').then(res=>{
@@ -193,8 +247,11 @@ export default {
         state.proList = res
       })
     };
-    const choosePro = (res) => {
+    const buyNow = (res) => {
+    };
+    const choosePro = (res,index) => {
       state.currentPro = res
+      state.currentPro['index'] = index + 1
     };
     const handleResize = () => {
       const windowWidth = window.innerWidth;
@@ -227,6 +284,7 @@ export default {
     return {
       ...toRefs(state),
       onSwiper,
+      buyNow,
       linkTo,
       choosePro,
       sildePre,

@@ -17,7 +17,7 @@ const app = createApp(App)
 import { Spin, Image, message, Popover, Steps, Drawer, Collapse, Dropdown, Timeline, Modal, Descriptions, ConfigProvider, 
   Table, Menu, Layout, Input, Button, Popconfirm, Form, Checkbox, Radio, TimePicker, Select, Card, Row, Tooltip, 
   Col, Tabs, DatePicker, Space, InputNumber, Slider, Upload, Badge, Tag, Avatar, Statistic, Divider, Empty, 
-  Switch, Result, Progress, Cascader, Breadcrumb, Transfer, Pagination } from 'ant-design-vue';
+  Switch, Result, Progress, Cascader, Breadcrumb, Transfer, Pagination, Rate } from 'ant-design-vue';
 
 
 app.config.globalProperties.$wow = wow
@@ -70,4 +70,5 @@ app.use(Progress)
 app.use(Breadcrumb)
 app.use(Transfer)
 app.use(Pagination)
+app.use(Rate)
 app.use(store).use(router).mount("#app");
