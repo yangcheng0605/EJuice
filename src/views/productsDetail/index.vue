@@ -82,10 +82,14 @@
         </div>
         <div class="col-right">
           <div class="changebtns clearfix">
-            <div class="item-group" v-for="item in productImgs" :key="item.id">
-              <div :class="['item-list', (currentPro&&currentPro.id)===item2.id?'focus':'']" :data-index="item2.id" v-for="(item2, index) in item.data" :key="item2.id" @click="choosePro(item2, index)">
+            <div class="item-group">
+              <!-- <div :class="['item-list', (currentPro&&currentPro.id)===item2.id?'focus':'']" :data-index="item2.id" v-for="(item2, index) in item.data" :key="item2.id" @click="choosePro(item2, index)">
                   <img :src="item2.url" alt="" class="flavor-pd">
                   <img src="https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/shadow.png" alt="" srcset="" class="flavor-hover">
+              </div> -->
+              <div :class="['item-list', (currentPro&&currentPro.id)===item.id?'focus':'']" :data-index="index" v-for="(item, index) in productImgs" :key="item.id" @click="choosePro(item, index)">
+                <img :src="item.url" alt="" class="flavor-pd">
+                <img src="https://d2z9m2ihdgcjvw.cloudfront.net/products/elfliq/shadow.png" alt="" srcset="" class="flavor-hover">
               </div>
             </div>
           </div>
@@ -229,7 +233,8 @@ gsap.registerPlugin(ScrollTrigger);
               .to('.left-col', { right: '0%' },'<')
               .to('.right-col', { left: '0%' },'<')
           });
-          state.currentPro = state.productImgs[0].data[0]
+          state.currentPro = state.productImgs[0]
+          state.currentPro[index] = 1
         })
       })
       const getProductList = (id) => {
