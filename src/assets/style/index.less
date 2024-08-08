@@ -192,13 +192,16 @@ div,input,textarea {
 }
 /* 首页视频 */
 .video-container{
-  width: 100%;
-  height: 100vh;
+  width: calc(100% - 1px);
+  height: calc(100vh + 0.5px);
   overflow: hidden;
   video{
     width: 100%;
-    height: 100%;
+    height: calc(100vh + 0.5px);
     object-fit: cover;
+    border: none !important;
+    outline: none !important;
+    overflow: hidden;
   }
   .guide {
     position: absolute;

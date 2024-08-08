@@ -1,7 +1,7 @@
 <template>
   <div class="contact">
     <div class="top_banner">
-      <img src="@/assets/img/about/contact_banner.webp" alt="">
+      <img :src="bannerList && bannerList.pPath" alt="">
       <div class="t_box">
         <p class="title AntonFont">SUPPORT</p>
       </div>
@@ -68,6 +68,7 @@ import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue';
       const { proxy } = getCurrentInstance();
       const state = reactive({
         contactModal: false,
+        bannerList: null,
         email: 'support@NEX.com',
         whatsApp: '+86 13760182010',
         contactModalOp: {
@@ -78,6 +79,7 @@ import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue';
       })
 
       onMounted(async () => { 
+        getBannerList()
         nextTick(() => {
            var wow = new proxy.$wow.WOW({boxClass: "wow",
                animateClass: "animated", 
@@ -93,7 +95,11 @@ import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue';
            wow.init()
         })
       })
-
+      const getBannerList = () => {
+        proxy.$api.getBannerList(3).then(res=>{
+          state.bannerList = res
+        })
+      };
       const contact = (type) => {
         state.contactModal = true
         let obj

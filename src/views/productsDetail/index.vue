@@ -237,16 +237,10 @@ gsap.registerPlugin(ScrollTrigger);
           state.currentPro[index] = 1
         })
       })
-      const getProductList = (id) => {
-        proxy.$api.productList(id).then(res=>{
+      const getProductDetail = (id) => {
+        proxy.$api.getProduct(id).then(res=>{
           state.proData = res
           state.imageUrls = res.imageUrls && res.imageUrls.split(',')
-          getProductListByCate(1)
-        })
-      };
-      const getProductListByCate = (id) => {
-        proxy.$api.productListByCate(id).then(res=>{
-          state.proList = res
         })
       };
       const handleResize = () => {
@@ -283,7 +277,7 @@ gsap.registerPlugin(ScrollTrigger);
         const query = e.query
         if (query.id)  {
           state.id = parseInt(query.id) || null;
-          getProductList(query.id)
+          getProductDetail(query.id)
         }
       }, { immediate: true })
       return {

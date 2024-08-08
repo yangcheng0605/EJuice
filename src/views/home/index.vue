@@ -12,6 +12,7 @@
                 delay: 8000,
                 disableOnInteraction: false,
               }"
+              :pagination="pagination"
               :loop="true"
               :modules="modules"
             >
@@ -127,11 +128,12 @@
 </template>
 <script>
 import { Swiper, SwiperSlide } from 'swiper/vue';
-import { Autoplay, EffectFade, Navigation } from 'swiper/modules';
+import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 import { getCurrentInstance, nextTick, onMounted, reactive, toRefs, h } from 'vue';
 import { LoadingOutlined } from '@ant-design/icons-vue';
 import Storage from '@/utils/storage';
 import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 import 'swiper/css';
 import { useRouter } from 'vue-router';
 export default {
@@ -150,7 +152,11 @@ export default {
       spin: true,
     });
     const state = reactive({
-      modules: [Autoplay, EffectFade, Navigation],
+      modules: [Autoplay, EffectFade, Pagination, Navigation],
+      pagination: {
+        clickable: true,
+       
+      },
       activeKey: 1,
       perView: 4,
       between: 40,
@@ -217,7 +223,7 @@ export default {
     })
     onMounted(async () => { 
       getPicList()
-      getProductListByCate(state.activeKey)
+      getIndexCard()
       nextTick(() => {
         var wow = new proxy.$wow.WOW({boxClass: "wow",
             animateClass: "animated", 
@@ -238,13 +244,13 @@ export default {
       state.currentPro['index'] = 1
     })
     const getPicList = () => {
-      proxy.$api.picList('').then(res=>{
+      proxy.$api.getPicList().then(res=>{
         state.bannerList = res
       })
     };
-    const getProductListByCate = (id) => {
-      proxy.$api.productListByCate(id).then(res=>{
-        state.proList = res
+    const getIndexCard = () => {
+      proxy.$api.getIndexCard().then(res=>{
+        // state.productImgs = res
       })
     };
     const buyNow = (res) => {
@@ -370,14 +376,34 @@ export default {
       }
     }
     .swiper_box {
+      .swiper-slide{
+        height: 50rem;
+      }
+      .swiper-pagination{
+        position: absolute;
+        width: auto;
+        left: 7.5rem;
+        bottom: 4.875rem;
+        .swiper-pagination-bullet{
+          width: 1.25rem;
+          height: 0.25rem;
+          background: rgba(255,255,255,0.5);
+          border-radius: 0.3125rem;
+          transition: all .3s;
+          &.swiper-pagination-bullet-active{
+            width: 3.75rem;
+            background: #FFFFFF;
+          }
+        }
+      }
       .home_sildePre, .home_sildeNext {
         bottom: 3.75rem;
       }
       .home_sildePre{
-        left: 7.5rem;
+        right: 12.5rem;
       }
       .home_sildeNext{
-        left: 12.5rem;
+        right: 7.5rem;
       }
       .home_sildePre:hover{
         background: url('../../assets/img/arrow_yellow_l.png') no-repeat 100%/contain;

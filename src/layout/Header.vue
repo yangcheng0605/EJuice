@@ -52,38 +52,6 @@
               <a href="/#/products">Learn more &gt;</a>
             </div>
           </div>
-          <!-- <div class="main_popup2 main_popup" :class="popIndex == 1?'main_popup_show':''" @mouseleave="leaveTo">
-            <div class="mainex">
-              <a class="maex_nav" href="/#/wholesale?id=0"><div>BECOME A WHOLESALE</div></a>
-              
-              <a class="maex_nav" href="/#/wholesale?id=1"><div>GET FREE SAMPLE</div></a>
-              
-              <a class="maex_nav" href="/#/wholesale?id=2"><div>FREE PROMOTIONAL MATERIALS</div></a>
-              
-            </div>
-          </div>
-          <div class="main_popup3 main_popup" :class="popIndex == 2?'main_popup_show':''" @mouseleave="leaveTo">
-            <div class="mainex">
-              
-                  
-              <a class="maex_nav" href="/#/support?id=0"><div>CONTACT US</div></a>
-              
-              <a class="maex_nav" href="/#/support?id=1"><div>PRODUCT VERIFICATION</div></a>
-              
-              <a class="maex_nav" href="/#/support?id=2"><div>FAQ</div></a>
-              
-            </div>
-          </div>
-          <div class="main_popup4 main_popup" :class="popIndex == 3?'main_popup_show':''" @mouseleave="leaveTo">
-            <div class="mainex">
-              <a class="maex_nav" href="/#/blog?id=0"><div>CONTACT</div></a>
-            </div>
-          </div>
-          <div class="main_popup5 main_popup" :class="popIndex == 4?'main_popup_show':''" @mouseleave="leaveTo">
-            <div class="mainex">
-              <a class="maex_nav" href="/#/blog?id=0"><div>ABOUT</div></a>
-            </div>
-          </div> -->
         </div>
       </div>
       <div class="mobile-only">
@@ -140,6 +108,7 @@ import { PlusOutlined } from "@ant-design/icons-vue";
 import { useRoute, useRouter } from 'vue-router';
 import { Empty } from "ant-design-vue";
 import Storage from '@/utils/storage';
+import {globalState} from '@/utils/globalState.js'
 export default {
   name: "Header",
   components: {
@@ -161,28 +130,20 @@ export default {
         // {name: 'BLOG', path: '/wholesale', active: false},
       ],
       proIndex: 2,
-      mpType:[
-        { cateId: 2, cateName: 'New Arrivals'},
-        { cateId: 3, cateName: 'Disposable Series'},
-        { cateId: 4, cateName: 'Pod Series'},
-        { cateId: 5, cateName: 'E-liquid'},
-        { cateId: 6, cateName: 'Other'},
-      ],
+      // mpType: null,
       mpList: []
     })
     onMounted(async () => {
-      getProductListByCate(1)
+      
     })
-    // const getCategoryList = () => {
-    //   proxy.$api.categoryList('').then(res=>{
-    //     state.mpType = res
-    //     state.proIndex = res[0].cateId
-    //     getProductListByCate(res[0].cateId)
-    //     Storage.setItem('navList', res)
-    //   })
-    // };
-    const getProductListByCate = (id) => {
-      proxy.$api.productListByCate(id).then(res=>{
+    const getCategoryList = () => {
+      proxy.$api.getCategoryList().then(res=>{
+        globalState.mpType = res
+        globalState.activeKey = res[0].cateId
+      })
+    };
+    const getProductList = (id) => {
+      proxy.$api.getProductList(id).then(res=>{
         state.mpList = res
       })
     };
@@ -200,11 +161,13 @@ export default {
       };
     const hoverTo = (e) => {
       state.popIndex = e
-      getProductListByCate(1)
+      if (e == 1 && state.mpType && state.mpType.length>0) {
+        getProductList(state.mpType[0].cateId)
+      }
     }
     const proHoverTo = (e) => {
       state.proIndex = e
-      getProductListByCate(e)
+      getProductList(e)
     }
     const leaveTo = () => {
       state.popIndex = null
@@ -214,15 +177,16 @@ export default {
     }
     watch(route, (e) => {
       var path = e.fullPath
+      getCategoryList()
       if (Storage.getItem('navActive')) {
-          state.navList = state.navList.map(item => {
-            if (item.path === path) {
-              item.active = true;
-            } else {
-              item.active = false;
-            }
-            return item;
-          });
+        state.navList = state.navList.map(item => {
+          if (item.path === path) {
+            item.active = true;
+          } else {
+            item.active = false;
+          }
+          return item;
+        });
       }
       window.scrollTo({
         top: 0,
@@ -232,6 +196,7 @@ export default {
     return {
       Empty,
       ...toRefs(state),
+      ...toRefs(globalState),
       targetShowNav,
       linkTo,
       linkToPro,
@@ -248,3 +213,4 @@ export default {
 <style scoped lang="scss">
 
 </style>
+../utils/globalState.js

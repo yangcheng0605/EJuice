@@ -138,7 +138,7 @@ import "@/assets/style/footer.less"
 import { getCurrentInstance, onMounted, reactive, ref, toRefs, watch } from 'vue';
 import { PlusOutlined } from "@ant-design/icons-vue";
 import { Empty } from "ant-design-vue";
-import Storage from '@/utils/storage';
+import {globalState} from '@/utils/globalState.js'
 export default {
   name: "Footer",
   components: {
@@ -147,23 +147,9 @@ export default {
   setup() {
     const { proxy } = getCurrentInstance();
     const state = reactive({
-      mpType:[
-        { cateId: 2, cateName: 'New Arrivals'},
-        { cateId: 3, cateName: 'Disposable Series'},
-        { cateId: 4, cateName: 'Pod Series'},
-        { cateId: 5, cateName: 'E-liquid'},
-        { cateId: 6, cateName: 'Other'},
-      ],
     })
     onMounted(async () => {
-      // getCategoryList()
     })
-    // const getCategoryList = () => {
-    //   proxy.$api.categoryList('').then(res=>{
-    //     state.mpType = res
-    //     Storage.setItem('navList', res)
-    //   })
-    // };
     // const linkTo = (e) => {
     //   router.push({
     //     path: e.path
@@ -173,6 +159,7 @@ export default {
     return {
       Empty,
       ...toRefs(state),
+      ...toRefs(globalState),
       // linkTo,
     }
   }

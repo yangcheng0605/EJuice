@@ -1,7 +1,7 @@
 <template>
   <div class="products">
     <div class="top_banner">
-      <img src="@/assets/img/product/banner_top.webp" alt="">
+      <img :src="bannerList && bannerList.pPath" alt="">
       <div class="t_box">
         <p class="title AntonFont">PRODUCTS</p>
       </div>
@@ -55,6 +55,8 @@ import { getCurrentInstance, nextTick, onMounted, reactive, toRefs, watch } from
 import { useRoute, useRouter } from 'vue-router';
 import { Empty } from "ant-design-vue";
 import Storage from '@/utils/storage';
+import {globalState} from '@/utils/globalState.js'
+
   export default {
     name: "products",
     components: {
@@ -68,37 +70,37 @@ import Storage from '@/utils/storage';
         isMobile: false,
         colSpan: 5,
         gutter: null,
-        activeKey: 2,
-        mpType:[
-          { cateId: 2, cateName: 'New Arrivals'},
-          { cateId: 3, cateName: 'Disposable Series'},
-          { cateId: 4, cateName: 'Pod Series'},
-          { cateId: 5, cateName: 'E-liquid'},
-          { cateId: 6, cateName: 'Other'},
-        ],
+        bannerList: null,
         proList: []
       })
       onMounted(async () => {
+        getBannerList();
         handleResize();
         window.addEventListener('resize', handleResize);
       })
       // const getCategoryList = () => {
       //   proxy.$api.categoryList('').then(res=>{
-      //     state.mpType = res
-      //     state.activeKey = res[0].cateId
-      //     getProductListByCate(res[0].cateId)
+      //     globalState.mpType = res
+      //     globalState.activeKey = res[0].cateId
+      //     getProductList(res[0].cateId)
       //     Storage.setItem('navList', res)
       //   })
       // };
-      const getProductListByCate = (id) => {
+      const getBannerList = () => {
+        proxy.$api.getBannerList(1).then(res=>{
+          state.bannerList = res
+          globalState.activeKey = globalState.mpType[0].cateId
+        })
+      };
+      const getProductList = (id) => {
         state.spinning = true
-        proxy.$api.productListByCate(id).then(res=>{
+        proxy.$api.getProductList(id).then(res=>{
           state.proList = res
           state.spinning = false
         })
       };
       const changeTab = (res) => {
-        getProductListByCate(res)
+        getProductList(res)
       };
       const handleResize = () => {
         const windowWidth = window.innerWidth;
@@ -119,23 +121,22 @@ import Storage from '@/utils/storage';
         const query = e.query
         if (query.id) {
           nextTick(() => {
-            state.activeKey = parseInt(query.id) || 1
-            getProductListByCate(query.id)
+            globalState.activeKey = parseInt(query.id)
+            getProductList(query.id)
           })
         } else {
           // if (!Storage.getItem('navList')) {
-          //   getCategoryList()
           // } else {
             // state.mpType = Storage.getItem('navList')
             // state.activeKey = state.mpType &&  state.mpType[0].cateId
-            state.activeKey = 2
-            getProductListByCate(state.activeKey)
+            getProductList(globalState.activeKey)
           // }
         }
       }, { immediate: true })
       return {
         Empty,
         ...toRefs(state),
+        ...toRefs(globalState),
         linkTo,
         changeTab,
       };

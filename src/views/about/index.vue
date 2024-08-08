@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <div class="top_banner">
-      <img src="@/assets/img/about/about_banner.webp" alt="">
+      <img :src="bannerList && bannerList.pPath" alt="">
       <div class="t_box">
         <p class="title AntonFont about_title">WHY NEX JUICE</p>
       </div>
@@ -61,6 +61,7 @@ import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue';
       const state = reactive({
         gutter: 30,
         isMobile: false,
+        bannerList: null,
         companyInfo:[
           { id: 1, img: require('@/assets/img/about/companyInfo_1.webp')},
           // { id: 2, img: require('@/assets/img/about/companyInfo_2.webp')},
@@ -76,6 +77,7 @@ import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue';
       })
 
       onMounted(async () => { 
+        getBannerList();
         handleResize();
         window.addEventListener('resize', handleResize);
         nextTick(() => {
@@ -93,6 +95,11 @@ import { getCurrentInstance, nextTick, onMounted, reactive, toRefs } from 'vue';
           wow.init()
         })
       })
+      const getBannerList = () => {
+        proxy.$api.getBannerList(2).then(res=>{
+          state.bannerList = res
+        })
+      };
       const handleResize = () => {
         const windowWidth = window.innerWidth;
        if (windowWidth < 750) {
